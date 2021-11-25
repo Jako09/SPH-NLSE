@@ -8,10 +8,10 @@ using namespace std;
 
 int main(){
   
-  int N=pow(2,5)*20;
+  int N=pow(2,4)*20;
   int itmax=10000;
   double g = 0.0;
-  double R[N], m[N], V[N], h[N], D[N], Dx[N], Dxx[N], Pxx[N], A[N];
+  double R[N], m[N], V[N], h[N], D[N], Dx[N], Dxx[N], Dxxx[N], Pxx[N], A[N];
   double Aq[N],Agp[N],Av[N],Ad[N], xmin=-4.0, xmax=4.0;
   
   //for time integration
@@ -21,7 +21,7 @@ int main(){
   double Zh[N], Omega[N];
   
   alc=1.3*alcance(tol,200.0/(double)N);   
-  SPH(N,g,R,m,h,V,D,Dx,Dxx,Pxx, Aq, Agp, Av, A, Zh, Omega); /*Genera N partpiculas en 1D*/
+  SPH(N,g,R,m,h,V,D,Dx,Dxx, Dxxx, Pxx, Aq, Agp, Av, A, Zh, Omega); /*Genera N partpiculas en 1D*/
   
   //In this case -h because we are goint to a back step.
   step=4.0e-3;
@@ -73,8 +73,9 @@ int main(){
     Densidad0(N, m, Xc, h, D);
     Densidad1(N, m, Xc, h, D, Dx);
     Densidad2(N, m, Xc, h, D, Dx, Dxx);
-    Pressxx(N, m, Xc, h, D, Dx, Dxx, Pxx);
-    AceQ(N, m, Xc, h, D, Pxx, Aq);
+    Densidad3(N , m, R, h,  D, Dx,Dxx,Dxxx);	
+    Pressxx(N, m, Xc, h, D, Dx, Dxx, Dxxx, Pxx);
+    AceQ(N, m, Xc, h, D, Dx, Dxx, Dxxx, Pxx, Aq);
     AceGP(N,g, m, Xc, h, D,Dx, Agp);
 //	AceQAdaptative(N, m, Xc, h, D, Pxx,Omega, Aq);
 //  AceGPAdaptative(N,g, m, Xc, h, D,Omega, Agp);

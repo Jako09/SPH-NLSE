@@ -11,14 +11,16 @@ void SPH(int N, double g, double R[], double m[], double h[], double V[], double
   Glasslike(N, xmin, xmax, R, m); //Distrobución equidistante
 //  Suavizado(2,1, N, m, R, D, h, Zh, Omega);
   for(int i=0; i<N;++i){
-    h[i]=200.0/(double)N;
+//	h[i]=300/(double)N;
+	h[i]=1.0;
+//    h[i]=200.0/(double)N;
     V[i]=0.0;
   }
   Densidad0(N, m, R, h, D);
   Densidad1( N, m, R, h, D, Dx);
   Densidad2( N, m, R, h, D, Dx, Dxx);
-  Pressxx( N, m, R, h, D, Dx, Dxx,Dxxx, Pxx);
   Densidad3(N , m, R, h,  D, Dx,Dxx,Dxxx);
+//  Pressxx( N, m, R, h, D, Dx, Dxx,Dxxx, Pxx);
   AceQ(N, m, R, h, D, Dx, Dxx, Dxxx, Pxx, Aq);
   AceGP(N,g, m, R, h, D,Dx, Agp);
   AceV(N,m,h, R, D,Av);

@@ -14,12 +14,12 @@ void Pressxx(int N, double m[], double h[], double R[], double D[], double Dx[],
   }
 // 
 */ 
-
+/*
 for(int i=0;i<N; i++){
 	Pxx[i]=0.0;
 	Pxx[i]=0.25*(Dxx[i]-Dx[i]*Dx[i]/D[i]);
 	}
-
+*/
 
 /*	//second discretization for quantum potential for Bohm representation 
 	for(int i=0; i<N; ++i){
@@ -32,12 +32,12 @@ for(int i=0;i<N; i++){
 */
 
 //Verify pressure
-/*
+
 //------->Resultado 001
  for(int i=0; i<N; i++){
 	 Pxx[i]=0.5*D[i];
 	 }
 //------->Resultado 001
-*/
+
 }
 

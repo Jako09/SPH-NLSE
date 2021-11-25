@@ -35,9 +35,9 @@ for(int i=0; i<N; i++){
       A[i]=A[i]-m[j]*(Peffi+Peffj)*dker(h[i], R[i], R[j]);
     }
   }
-
-//-------------> Resultado 001
 */
+//-------------> Resultado 001
+
   /*
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -66,35 +66,46 @@ for(int i=0; i<N; i++){
 	}
 	*/
 
-//----------------------> resultados 002
+//----------------------> resultados 002, 003
 for(int i=0; i<N; i++){
 	A[i]=0.0;
 	for(int j=0; j<N; j++){
 		A[i]=A[i]+m[j]*0.25*(Dxxx[j]/D[j]-2.0*Dx[j]*Dxx[j]/(D[j]*D[j])+Dx[j]*Dx[j]*Dx[j]/(D[j]*D[j]*D[j]))*ker(h[i],R[i],R[j])/D[j];
 	}
 }
-//----------------------> resultado 002
+//----------------------> resultado 002, 003
 
 }
 //Contribución de la aceleración por el parámetro no lineal g, debido a la ecuación Gross Pitaevskii en su transformación de Madelung, mediante el método SPH, donde es necesario, el valor de g, la masa, la posición, el suavizado, la densidad y el arreglo para la aceleración, para cada partícula.También es de orden operación N^2.
 void AceGP(int N, double g, double m[], double R[], double h[], double D[], double Dx[], double A[]){
+  
   for(int i=0; i<N; i++){
     A[i]=0.0;
-      A[i]=-g*Dx[i];
+    A[i]=-g*Dx[i];
   }
+  
+  /*no sure
+  for(int i=0; i<N; i++){
+    A[i]=0.0;
+    for(int j=0; j<N; j++){
+		A[i]=A[i]-g*(m[j]/D[j])*Dx[j]*ker(h[i],R[i],R[j]);
+	}
+  }
+  */ 
 }
 //Contribución debido al potencial al cual se encuentra sometido el sistema, en nuestro caso, el potencial se refiere a un osciladro armónico, donde se requiere del valor de la posición de la partícula para obtener su correspondiente aceleración.
 void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
   double Veffj, Veffi, VQ;
+/*
   //---------> Resultado 001,002
   for(int i=0; i<N; i++){
     A[i]=0.0;
     A[i]=-R[i];
   }
   //---------> Resultado 001,002
-
+*/
   
-  /*
+  //----------> Resultados 003
   for(int i=0; i<N; i++){
     A[i]=0.0;
     for(int j=0; j<N; j++){
@@ -102,7 +113,8 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
         A[i]=A[i]-m[j]*(Veffj)*dker(h[i], R[i], R[j])/D[j];
     }
   }
-  */
+  //-----------> Resultados 003
+  
 /*
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -136,7 +148,11 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
     }
   }
 	*/
-
+	////////////////////////////////////////////////////////////// FOR NONLINEAR TERM
+/*	for(int i=0; i<N; i++){
+		A[i]=0.0;
+		}
+	*/
   
 }
 //Contribución debido al damping (sistema no conservativo), donde se requiere de la velocidad central, el parámetro de damping.
@@ -148,14 +164,14 @@ void AceDamp(int N,double m[], double h[], double R[], double D[], double DV, do
   }
 	*/
 
-  //------> For stability of the system ----------------> Resultados para 001 y 002
+  //------> For stability of the system ----------------> Resultados para 001, 002, 003
   for(int i=0; i<N; i++){
     A[i]=0.0;
     for(int j=0; j<N; j++){
       A[i]=A[i]-DV*m[j]*Vc[j]*ker(h[i], R[i], R[j])/D[j];
     }
   }
-  //----------------------> Resultados para 001 y 002
+  //----------------------> Resultados para 001, 002, 003
    
 }
 /////////////////////////////////////////////////////////////////////////////////////////
