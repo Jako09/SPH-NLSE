@@ -20,7 +20,7 @@ for(int i=0;i<N; i++){
 	Pxx[i]=0.25*(Dxx[i]-Dx[i]*Dx[i]/D[i]);
 	}
 */
-
+////////////////////////////Bohm Representation
 /*	//second discretization for quantum potential for Bohm representation 
 	for(int i=0; i<N; ++i){
 		Pxx[i]=0.0;
@@ -30,14 +30,18 @@ for(int i=0;i<N; i++){
 		}
 	}
 */
-
+//------------>004
+for(int i=0; i<N; i++){
+ Pxx[i]=-(0.25/D[i])*(Dxx[i]-0.5*Dx[i]*Dx[i]/D[i]);
+}
+//------------->004
 //Verify pressure
-
+/*
 //------->Resultado 001
  for(int i=0; i<N; i++){
 	 Pxx[i]=0.5*D[i];
 	 }
 //------->Resultado 001
-
+*/
 }
 

@@ -15,7 +15,7 @@ int main(){
   double Aq[N],Agp[N],Av[N],Ad[N], xmin=-4.0, xmax=4.0;
   
   //for time integration
-  double Vp[N],Vf[N],Vc[N],Xp[N],Xf[N],Xc[N],step, DV=4.0, tol=1.0e-16, alc;
+  double Vp[N],Vf[N],Vc[N],Xp[N],Xf[N],Xc[N],step, DV=3.0, tol=1.0e-16, alc;
   
   //for adaptative smoothing length
   double Zh[N], Omega[N];
