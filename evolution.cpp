@@ -10,7 +10,7 @@ int main(){
 	/////1Dimensional
 	if(Dim=="1Dimensional"){
 		int N=300; // # of particles -----> for BEC and Harmonic Oscillator
-//		int N=pow(2,5)*20;	// # of particles   -----> for Harmonic Oscillator
+//		int N=pow(2,0)*20;	// # of particles   -----> for Harmonic Oscillator
 		int itmax=10000; // # of iterations of evolution Leap Froag
 	  double g = 10.0; // nonlinear parameter for NLSE ----> BEC
 	  //Initial values
@@ -24,17 +24,18 @@ int main(){
 	  //for adaptative smoothing length
 	  double Zh[N], Omega[N], dZh[N]; // Zh-> Zeta function for h, Omega-> h-grad, dZh-> derivative zeta function. 
 	  //for energy
-	  double E, Eff; // E----> energy average 
+	  double E, Mu; // E----> energy average 
 	  SPH(N,g,R,m,h,V,D,Dx,Dxx, Dxxx, Pxx,Aq,Agp, Av,A, Zh, Omega); // SPH function generate N virtual partícles with the initial values of  g,R,m,h,V,D,Dx,Dxx,Pxx,A, Zh, Omega
 	  //In this case -h because we are goint to a back step.
-	  E=Qenergy(N, m, R, V, D, Dx); //Initial Energy 
+	  E=Qenergy(N, g, m, R, V, D, Dx); //Initial Energy
+	  Mu=ChePotential(N, g, m, R, V,  D, Dx); 
 	//  Qenergyi(N, m, R, V, D, Dx, Ei);
 			
 		//data
-	  ofstream file("dataBECg10.xxx"); //open file to data
-		ofstream file1("energydataBECg10.xxx");
+	  ofstream file("dataBECg10.0.xxx"); //open file to data
+		ofstream file1("energydataBECg10.0.xxx");
 		file << "\n\n\n"; //print in data file the initial values
-		file1 << 0 << "\t\t" << E << "\t\t" << Eff << '\n';
+		file1 << 0 << "\t\t" << E << "\t\t" << Mu << '\n';
 		  for(int i=0; i < N; i++){
 			file << R[i] <<  "\t\t"<< D[i] << "\t\t"<< Dx[i] <<  "\t\t"<< Dxx[i] << "\t\t"<< Dxxx[i] << "\t\t" << V[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << dZh[i] << "\t\t"<< Omega[i] <<  "\t\t"<< Ei[i] <<"\n";
 		  }
@@ -68,8 +69,9 @@ int main(){
 					file << R[i] << "\t\t" << D[i] << "\t\t"<< Dx[i] << "\t\t"<< Dxx[i] << "\t\t"<< Dxxx[i] << "\t\t"  << V[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << dZh[i] << "\t\t"<< Omega[i] << "\t\t"<< Ei[i] <<'\n';
 				}
 			}
-			E=Qenergy(N, m, R, V, D, Dx);
-			file1 << t*step  << "\t\t" << E  << "\t\t" << Eff << '\n';
+			E=Qenergy(N, g, m, R, V, D, Dx);
+			Mu=ChePotential(N, g, m, R, V,  D, Dx);
+			file1 << t*step  << "\t\t" << E  << "\t\t" << Mu << '\n';
 		}
 			file1.close(); // close the datafile for energy
 		file.close(); //we close the datafile

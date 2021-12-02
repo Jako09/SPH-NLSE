@@ -11,8 +11,9 @@ void SPH(int N, double g, double R[], double m[], double h[], double V[], double
   Glasslike(N, xmin, xmax, R, m); //Distrobución equidistante
 //  Suavizado(2,1, N, m, R, D, h, Zh, Omega);
   for(int i=0; i<N;++i){
-//	h[i]=0.7;
-    h[i]=200.0/(double)N;
+//	h[i]=1.0;
+	h[i]=200.0/(double)N; //for BEC
+//    h[i]=150.0/(double)N;
     V[i]=0.0;
   }
   Densidad0(N, m, R, h, D);
@@ -39,12 +40,20 @@ void SPH(int N, double g, double R[], double m[], double h[], double V[], double
   */  
 }
 
-double Qenergy(int N, double m[], double R[], double V[], double D[], double Dx[]){
+double Qenergy(int N, double g, double m[], double R[], double V[], double D[], double Dx[]){
 	double E=0.0;
 	for(int i=0; i<N; i++){
-		E=E+0.5*m[i]*(V[i]*V[i]+R[i]*R[i]+0.25*Dx[i]*Dx[i]/(D[i]*D[i]));
+		E=E+0.5*m[i]*(V[i]*V[i]+R[i]*R[i]+0.25*Dx[i]*Dx[i]/(D[i]*D[i])+g*D[i]);
 		}
 	return E;
+	}
+	
+double ChePotential(int N, double g, double m[], double R[], double V[], double D[], double Dx[]){
+	double Mu=0.0;
+	for(int i=0; i<N; i++){
+		Mu=Mu+0.5*m[i]*(V[i]*V[i]+R[i]*R[i]+0.25*Dx[i]*Dx[i]/(D[i]*D[i])+2.0*g*D[i]);
+		}
+	return Mu;
 	}
 
 void Qenergyi(int N, double m[], double R[], double V[], double D[], double Dx[], double E[]){

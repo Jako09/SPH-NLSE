@@ -58,8 +58,9 @@ for(int i=0; i<N; i++){
 		  }
 	  }
 */
+
   //Second expresion for for quantum potential Q
-/*  //----------------> 004
+  //----------------> 004
   for(int i=0; i<N; i++){
 	  A[i]=0.0;
 	  for(int j=0; j<N; j++){
@@ -69,7 +70,8 @@ for(int i=0; i<N; i++){
 		  }
 	  }
 	//------------------>004
-*/	  
+
+/*
 	for(int i=0; i<N; i++){
 	  A[i]=0.0;
 	  Qeffi=0.0;
@@ -80,6 +82,7 @@ for(int i=0; i<N; i++){
 		  A[i]=A[i]-(m[j]/D[j])*(Qeffj-Qeffi)*dker(h[i], R[i], R[j]);
 		  }
 	  }
+*/	  
 ////////////////////---->	Quantum Force
 /*
 for(int i=0; i<N; i++){
@@ -134,7 +137,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
     }
   }
 */
-/*
+
   //----------> Resultados 003,004
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -144,8 +147,8 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
     }
   }
   //-----------> Resultados 003, 004
-*/
 
+/*
   for(int i=0; i<N; i++){
     A[i]=0.0;
     Veffi=0.5*R[i]*R[i];
@@ -154,7 +157,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
         A[i]=A[i]-m[j]*(Veffj-Veffi)*dker(h[i], R[i], R[j])/D[j];
     }
   }
-
+*/
 /*	
   Veffi=0.0;
   Veffj=0.0;
