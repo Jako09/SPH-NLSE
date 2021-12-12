@@ -60,7 +60,7 @@ for(int i=0; i<N; i++){
 */
 
   //Second expresion for for quantum potential Q
-  //----------------> 004
+  //----------------> 004, 005
   for(int i=0; i<N; i++){
 	  A[i]=0.0;
 	  for(int j=0; j<N; j++){
@@ -69,7 +69,7 @@ for(int i=0; i<N; i++){
 		  A[i]=A[i]-(m[j]/D[j])*Qeffj*dker(h[i], R[i], R[j]);
 		  }
 	  }
-	//------------------>004
+	//------------------>004, 005
 
 /*
 	for(int i=0; i<N; i++){
@@ -128,7 +128,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
   }
   //---------> Resultado 001,002
 */
-/*
+//------->005
   for(int i=0; i<N; i++){
     A[i]=0.0;
     for(int j=0; j<N; j++){
@@ -136,8 +136,8 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
         A[i]=A[i]-m[j]*(Veffj)*ker(h[i], R[i], R[j])/D[j];
     }
   }
-*/
-
+//-------->005
+/*
   //----------> Resultados 003,004
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -147,7 +147,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
     }
   }
   //-----------> Resultados 003, 004
-
+*/
 /*
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -197,14 +197,14 @@ void AceDamp(int N,double m[], double h[], double R[], double D[], double DV, do
   }
 	*/
 
-  //------> For stability of the system ----------------> Resultados para 001, 002, 003, 004
+  //------> For stability of the system ----------------> Resultados para 001, 002, 003, 004, 005
   for(int i=0; i<N; i++){
     A[i]=0.0;
     for(int j=0; j<N; j++){
       A[i]=A[i]-DV*m[j]*Vc[j]*ker(h[i], R[i], R[j])/D[j];
     }
   }
-  //----------------------> Resultados para 001, 002, 003, 004
+  //----------------------> Resultados para 001, 002, 003, 004, 005
    
 }
 /////////////////////////////////////////////////////////////////////////////////////////

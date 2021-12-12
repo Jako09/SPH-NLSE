@@ -12,7 +12,7 @@ void SPH(int N, double g, double R[], double m[], double h[], double V[], double
 //  Suavizado(2,1, N, m, R, D, h, Zh, Omega);
   for(int i=0; i<N;++i){
 //	h[i]=1.0;
-	h[i]=200.0/(double)N; //for BEC
+	h[i]=500.0/(double)N; //for BEC h=400 for 005
 //    h[i]=150.0/(double)N;
     V[i]=0.0;
   }

@@ -37,10 +37,10 @@ void Densidad1(int N, double m[], double R[], double h[], double D[], double Dx[
 		Dx[i]+=m[j]*dker(h[i], R[i], R[j]);
     }
   }
- */ 
+*/
 	//--------->001, 002, 003
    //second discretization
-   //---------> 001, 002, 004
+   //---------> 001, 002, 004, 005
   for(int i=0; i<N; i++){
     Dx[i]=0.0;
     for(int j=0; j<N; j++){
@@ -48,7 +48,7 @@ void Densidad1(int N, double m[], double R[], double h[], double D[], double Dx[
       Dx[i]+=m[j]*q*dker(h[i], R[i], R[j]);
       }
   }
-	//------------>001, 002, 004
+	//------------>001, 002, 004, 005	
 
 /*  //thirth discretization
     for(int i=0; i<N; i++){
@@ -103,7 +103,7 @@ void Densidad2(int N , double m[], double R[], double h[], double D[], double Dx
   }
 */  
    //thirth discretization
-   //----------> 001, 002, 004
+   //----------> 001, 002, 004, 005
   for(int i=0; i<N; i++){
     Dxx[i]=0.0;
     for(int j=0; j<N; j++){
@@ -111,7 +111,7 @@ void Densidad2(int N , double m[], double R[], double h[], double D[], double Dx
       Dxx[i]+=m[j]*q*ddker(h[i], R[i], R[j]);
       }
   }
-	//----------> 001, 002, 004
+	//----------> 001, 002, 004, 005
 
 /*  //fourth discretization
     for(int i=0; i<N; i++){

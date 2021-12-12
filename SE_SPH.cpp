@@ -7,27 +7,34 @@ using namespace std;
 
 
 int main(){
-  
-  int N=pow(2,4)*20;
-  int itmax=10000;
-  double g = 0.0;
+//  int N=400;
+  int N=pow(2,6)*20;
+  int itmax=20000;
+  double g = 3.1371;
   double R[N], m[N], V[N], h[N], D[N], Dx[N], Dxx[N], Dxxx[N], Pxx[N], A[N];
   double Aq[N],Agp[N],Av[N],Ad[N], xmin=-4.0, xmax=4.0;
   
   //for time integration
-  double Vp[N],Vf[N],Vc[N],Xp[N],Xf[N],Xc[N],step, DV=4.0, tol=1.0e-16, alc;
+  double Vp[N],Vf[N],Vc[N],Xp[N],Xf[N],Xc[N],step, DV=8.0, tol=1.0e-16, alc;
   
   //for adaptative smoothing length
   double Zh[N], Omega[N];
   
-  alc=1.3*alcance(tol,200.0/(double)N);   
-  SPH(N,g,R,m,h,V,D,Dx,Dxx, Dxxx, Pxx, Aq, Agp, Av, A, Zh, Omega); /*Genera N partpiculas en 1D*/
+  double E, Mu=0.0; // E----> energy average 
+
   
+//  alc=1.3*alcance(tol,200.0/(double)N);   
+  SPH(N,g,R,m,h,V,D,Dx,Dxx, Dxxx, Pxx, Aq, Agp, Av, A, Zh, Omega); /*Genera N partpiculas en 1D*/
+  E=Qenergy(N, g, m, R, V, D, Dx); //Initial Energy
+	if(g=!0.0){
+		Mu=ChePotential(N, g, m, R, V,  D, Dx);//for chemical potential 
+	  } 
   //In this case -h because we are goint to a back step.
   step=4.0e-3;
   
-    ofstream file("dataSE.xxx");
-  
+    ofstream file("SEGPN5h500g3.1371.xxx");
+  		ofstream file1("SEenergyGPN5h500g3.1371.xxx");
+
 
     file << "\n\n\n";
       for(int i=0; i < N; ++i){
@@ -97,9 +104,15 @@ int main(){
 	file << Xc[i] << "\t\t" << D[i] << "\t\t" << Dx[i] << "\t\t" << Dxx[i] << "\t\t"  << Vc[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << Omega[i] <<"\n";
       }
     }
+    E=Qenergy(N, g, m, Xc, Vc, D, Dx);
+			if(g=!0.0){
+				Mu=ChePotential(N, g, m, Xc, Vc,  D, Dx);
+			}
+	file1 << j*step  << "\t\t" << E  << "\t\t" << Mu << '\n';
     
     
   }
+  file1.close();
   file.close();
   cout<< "El proceso ha terminado"<< "\n";
   return 0;
