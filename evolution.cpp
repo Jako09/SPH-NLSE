@@ -11,8 +11,8 @@ int main(){
 	if(Dim=="1Dimensional"){
 //		int N=300; // # of particles -----> for BEC and Harmonic Oscillator
 		int N=pow(2,5)*20;	// # of particles   -----> for Harmonic Oscillator
-		int itmax=20000; // # of iterations of evolution Leap Froag
-	  double g = 3.1371; // nonlinear parameter for NLSE ----> BEC
+		int itmax=10000; // # of iterations of evolution Leap Froag
+	  double g = 0.0; // nonlinear parameter for NLSE ----> BEC
 	  //Initial values
 	  double R[N], m[N], V[N], h[N], D[N], Dx[N], Dxx[N], Dxxx[N], Pxx[N], A[N], Aold[N], Ei[N]; // R -> position , m -> mass, V -> velocity, h -> smoothing length, D-> density, Dx-> derivative density, Dxx-> second derivative density, Pxx-> component xx of press tensor, A-> Total Acceleration. 
 	  //Different acelerations Aold --> old acceleration
@@ -24,20 +24,19 @@ int main(){
 	  //for adaptative smoothing length
 	  double Zh[N], Omega[N], dZh[N]; // Zh-> Zeta function for h, Omega-> h-grad, dZh-> derivative zeta function. 
 	  //for energy
-	  double E, Mu=0.0; // E----> energy average 
+	  double E, Enl, EKin, EPot, EQn, Mu=0.0; // E----> energy average 
 	  SPH(N,g,R,m,h,V,D,Dx,Dxx, Dxxx, Pxx,Aq,Agp, Av,A, Zh, Omega); // SPH function generate N virtual partícles with the initial values of  g,R,m,h,V,D,Dx,Dxx,Pxx,A, Zh, Omega
 	  //In this case -h because we are goint to a back step.
-	  E=Qenergy(N, g, m, R, V, D, Dx); //Initial Energy
-	  if(g=!0.0){
+	  E=Qenergy(N, g, m, R, V, D, Dx, EKin, EPot, EQn, Enl); //Initial Energy
+	  if(g!=0.0){
 		Mu=ChePotential(N, g, m, R, V,  D, Dx);
 	  } 
 	//  Qenergyi(N, m, R, V, D, Dx, Ei);
-			
-		//data
-	  ofstream file("evoGPN5h500g3.1371.xxx"); //open file to data
-		ofstream file1("evoenergyGPN5h500g3.1371.xxx");
+	//	data
+	  ofstream file("evoHON5h200g0.xxx"); //open file to data
+		ofstream file1("evoenergyHON5h200g0.xxx");
 		file << "\n\n\n"; //print in data file the initial values
-		file1 << 0 << "\t\t" << E << "\t\t" << Mu << '\n';
+		file1 << 0 << "\t\t" << E << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
 		  for(int i=0; i < N; i++){
 			file << R[i] <<  "\t\t"<< D[i] << "\t\t"<< Dx[i] <<  "\t\t"<< Dxx[i] << "\t\t"<< Dxxx[i] << "\t\t" << V[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << dZh[i] << "\t\t"<< Omega[i] <<  "\t\t"<< Ei[i] <<"\n";
 		  }
@@ -65,19 +64,21 @@ int main(){
 					V[i]=V[i]+0.5*(Aold[i]+A[i])*step;
 			}
 
-			if(t%10==0){ // 
+			if(t%50==0){ // 
 				file << "\n\n\n"; //print in data file the initial values
 				for(int i=0; i < N; i++){
 					file << R[i] << "\t\t" << D[i] << "\t\t"<< Dx[i] << "\t\t"<< Dxx[i] << "\t\t"<< Dxxx[i] << "\t\t"  << V[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << dZh[i] << "\t\t"<< Omega[i] << "\t\t"<< Ei[i] <<'\n';
 				}
+				E=Qenergy(N, g, m, R, V, D, Dx, EKin, EPot, EQn, Enl);
+				if(g!=0.0){
+					Mu=ChePotential(N, g, m, R, V,  D, Dx);
+				}
+				file1.open("evoenergyHON5h200g0.xxx",std::fstream::app);
+				file1 << t*step  << "\t\t" << E   << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
+				file1.close();
 			}
-			E=Qenergy(N, g, m, R, V, D, Dx);
-			if(g=!0.0){
-				Mu=ChePotential(N, g, m, R, V,  D, Dx);
-			}
-			file1 << t*step  << "\t\t" << E  << "\t\t" << Mu << '\n';
 		}
-			file1.close(); // close the datafile for energy
+	//	file1.close(); // close the datafile for energy
 		file.close(); //we close the datafile
 			cout<< "El proceso ha terminado"<< '\n';
 				return 0;	

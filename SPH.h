@@ -12,7 +12,7 @@ void SPH(int N, double g, double R[], double m[], double h[], double V[], double
 //  Suavizado(2,1, N, m, R, D, h, Zh, Omega);
   for(int i=0; i<N;++i){
 //	h[i]=1.0;
-	h[i]=500.0/(double)N; //for BEC h=400 for 005
+	h[i]=200.0/(double)N; //for BEC h=400 for 005
 //    h[i]=150.0/(double)N;
     V[i]=0.0;
   }
@@ -40,12 +40,19 @@ void SPH(int N, double g, double R[], double m[], double h[], double V[], double
   */  
 }
 
-double Qenergy(int N, double g, double m[], double R[], double V[], double D[], double Dx[]){
+double Qenergy(int N, double g, double m[], double R[], double V[], double D[], double Dx[],double &EKin, double &EPot, double &EQn, double &Enl){
 	double E=0.0;
+	EKin=0.0;
+	EPot=0.0; 
+	EQn=0.0;
+	Enl=0.0;
 	for(int i=0; i<N; i++){
-		E=E+0.5*m[i]*(V[i]*V[i]+R[i]*R[i]+0.25*Dx[i]*Dx[i]/(D[i]*D[i])+g*D[i]);
+	EKin=EKin+0.5*m[i]*V[i]*V[i];
+	EPot=EPot+0.5*m[i]*R[i]*R[i]; 
+	EQn=EQn+0.5*m[i]*0.25*Dx[i]*Dx[i]/(D[i]*D[i]);
+	Enl=Enl+0.5*m[i]*g*D[i];	
 		}
-	return E;
+	return E=EKin+EPot+EQn+Enl;
 	}
 	
 double ChePotential(int N, double g, double m[], double R[], double V[], double D[], double Dx[]){
