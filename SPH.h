@@ -8,11 +8,12 @@ void SPH(int N, double g, double R[], double m[], double h[], double V[], double
   double xmin=-4.0, xmax=4.0;
 //  grid(2,N,m,R); //Distribución analitica mediante un Grid
 //  UniformD(N,xmin,xmax,R,m); //Distribución Uniforme Aleatoria
-  Glasslike(N, xmin, xmax, R, m); //Distrobución equidistante
+		Glasslike(N, xmin, xmax, R, m); //Distrobución equidistante
 //  Suavizado(2,1, N, m, R, D, h, Zh, Omega);
   for(int i=0; i<N;++i){
 //	h[i]=1.0;
-	h[i]=200.0/(double)N; //for BEC h=400 for 005
+	h[i]=620.0/(double)N; //for BEC h=400 for 005/////---> h=620/N for HO-007
+//	h[i]=620.0/640.0;
 //    h[i]=150.0/(double)N;
     V[i]=0.0;
   }

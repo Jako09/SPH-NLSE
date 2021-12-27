@@ -4,7 +4,7 @@ using namespace std;
 //Contribución de la aceleración por el potencial cuántico, en un sistema descrito por las ecuaciones de Madelung obtenida mediante al método SPH, se recorre cada una de las partículas a la par de sus vecinas, dando un orden de operación N^2. Se requiere de las masas, la posición, el parámetro de suavizado, la densidad, la presión y el arreglo donde se guardan los valores de la aceleración, de cada una de las partículas.
 void AceQ(int N, double m[], double R[], double h[], double D[], double Dx[], double Dxx[], double Dxxx[], double Pxx[], double A[]){
   double Qeffi, Qeffj, Peffi, Peffj;
-/*
+//----------->007
 //for pressure tensor
 	for(int i=0; i<N; i++){
 		A[i]=0.0;
@@ -12,7 +12,7 @@ void AceQ(int N, double m[], double R[], double h[], double D[], double Dx[], do
 		A[i]=A[i]-(m[j]/D[j])*Pxx[j]*dker(h[i], R[i], R[j])/D[i];
 		}
 	}
-*/
+//----------->007
 /*
 for(int i=0; i<N; i++){
 		A[i]=0.0;
@@ -58,9 +58,9 @@ for(int i=0; i<N; i++){
 		  }
 	  }
 */
-
+/*
   //Second expresion for for quantum potential Q
-/*  //----------------> 004, 005
+  //----------------> 004, 005
   for(int i=0; i<N; i++){
 	  A[i]=0.0;
 	  for(int j=0; j<N; j++){
@@ -70,8 +70,8 @@ for(int i=0; i<N; i++){
 		  }
 	  }
 	//------------------>004, 005
-*/
 
+/*
 //-------->006
 	for(int i=0; i<N; i++){
 	  A[i]=0.0;
@@ -84,7 +84,7 @@ for(int i=0; i<N; i++){
 		  }
 	  }
 //----------->006
-
+*/
 ////////////////////---->	Quantum Force
 /*
 for(int i=0; i<N; i++){
@@ -130,8 +130,8 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
   }
   //---------> Resultado 001,002
 */
-/*
-//------->
+
+//------->007
   for(int i=0; i<N; i++){
     A[i]=0.0;
     for(int j=0; j<N; j++){
@@ -139,9 +139,22 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
         A[i]=A[i]-m[j]*(Veffj)*ker(h[i], R[i], R[j])/D[j];
     }
   }
+//-------->007
+
+/*
+//-------> NO FUNCIONA
+  for(int i=0; i<N; i++){
+    A[i]=0.0;
+    Veffi=0.5*R[i]*R[i];
+    for(int j=0; j<N; j++){
+		Veffj=0.5*R[j]*R[j];
+        A[i]=A[i]-m[j]*(Veffi-Veffj)*dker(h[i], R[i], R[j])/D[i];
+    }
+  }
 //-------->
 */
 /*
+
   //----------> Resultados 003,004
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -152,7 +165,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
   }
   //-----------> Resultados 003, 004
 */
-
+/*
 //------>006
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -163,7 +176,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
     }
   }
 //-------->006
-
+*/
 /*	
   Veffi=0.0;
   Veffj=0.0;
@@ -203,7 +216,7 @@ void AceDamp(int N,double m[], double h[], double R[], double D[], double DV, do
   }
 	*/
 
-  //------> For stability of the system ----------------> Resultados para 001, 002, 003, 004, 005
+  //------> For stability of the system ----------------> Resultados para 001, 002, 003, 004, 005, 006, 007
   for(int i=0; i<N; i++){
     A[i]=0.0;
     for(int j=0; j<N; j++){

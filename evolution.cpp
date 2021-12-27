@@ -7,10 +7,12 @@ using namespace std;
 
 int main(){
 	string Dim="1Dimensional";
+	string Frontier="Correction";
 	/////1Dimensional
 	if(Dim=="1Dimensional"){
 //		int N=300; // # of particles -----> for BEC and Harmonic Oscillator
-		int N=pow(2,5)*20;	// # of particles   -----> for Harmonic Oscillator
+		int N;
+			N=pow(2,3)*20;	// # of particles   -----> for Harmonic Oscillator
 		int itmax=10000; // # of iterations of evolution Leap Froag
 	  double g = 0.0; // nonlinear parameter for NLSE ----> BEC
 	  //Initial values
@@ -33,8 +35,8 @@ int main(){
 	  } 
 	//  Qenergyi(N, m, R, V, D, Dx, Ei);
 	//	data
-	  ofstream file("evoHON5h200g0.xxx"); //open file to data
-		ofstream file1("evoenergyHON5h200g0.xxx");
+	  ofstream file("evoHON3h620g0.0R2.xxx"); //open file to data
+		ofstream file1("evoenergyHON3h620g0.0R2.xxx");
 		file << "\n\n\n"; //print in data file the initial values
 		file1 << 0 << "\t\t" << E << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
 		  for(int i=0; i < N; i++){
@@ -44,9 +46,10 @@ int main(){
 		for(int t=0; t<itmax; t++){
 			if(t%100==0){cout << step*t << '\n';}
 			for(int i=0; i<N; i++){
-					R[i]=R[i]+V[i]*step+0.5*A[i]*(step*step);
-					Aold[i]=A[i];
+				R[i]=R[i]+V[i]*step+0.5*A[i]*(step*step);
+				Aold[i]=A[i];
 			}
+		
 			Densidad0(N, m, R, h, D); //The Densidad0 function gives values to Density
 			Densidad1(N, m, R, h, D, Dx); // The Densidad1 function gives values to derivative of Density
 			Densidad2(N, m, R, h, D, Dx, Dxx); // The Densidad2 function gives values to second derivative of Density
@@ -73,7 +76,7 @@ int main(){
 				if(g!=0.0){
 					Mu=ChePotential(N, g, m, R, V,  D, Dx);
 				}
-				file1.open("evoenergyHON5h200g0.xxx",std::fstream::app);
+				file1.open("evoenergyHON3h620g0.0R2.xxx",std::fstream::app);
 				file1 << t*step  << "\t\t" << E   << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
 				file1.close();
 			}
