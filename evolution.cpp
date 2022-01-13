@@ -12,8 +12,8 @@ int main(){
 	if(Dim=="1Dimensional"){
 //		int N=300; // # of particles -----> for BEC and Harmonic Oscillator
 		int N;
-			N=pow(2,3)*20;	// # of particles   -----> for Harmonic Oscillator
-		int itmax=10000; // # of iterations of evolution Leap Froag
+			N=pow(2,5)*20;	// # of particles   -----> for Harmonic Oscillator
+		int itmax=20000; // # of iterations of evolution Leap Froag
 	  double g = 0.0; // nonlinear parameter for NLSE ----> BEC
 	  //Initial values
 	  double R[N], m[N], V[N], h[N], D[N], Dx[N], Dxx[N], Dxxx[N], Pxx[N], A[N], Aold[N], Ei[N]; // R -> position , m -> mass, V -> velocity, h -> smoothing length, D-> density, Dx-> derivative density, Dxx-> second derivative density, Pxx-> component xx of press tensor, A-> Total Acceleration. 
@@ -35,8 +35,8 @@ int main(){
 	  } 
 	//  Qenergyi(N, m, R, V, D, Dx, Ei);
 	//	data
-	  ofstream file("evoHON3h620g0.0R2.xxx"); //open file to data
-		ofstream file1("evoenergyHON3h620g0.0R2.xxx");
+	  ofstream file("pruebaGbst1.1.xxx"); //open file to data
+		ofstream file1("pruebaeGbst1.1.xxx");
 		file << "\n\n\n"; //print in data file the initial values
 		file1 << 0 << "\t\t" << E << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
 		  for(int i=0; i < N; i++){
@@ -64,7 +64,12 @@ int main(){
 	//		Qenergyi(N, m, R, V, D, Dx, Ei);
 			for(int i=0; i<N; i++){
 					A[i] = Aq[i]+Agp[i]+Av[i]+Ad[i];
-					V[i]=V[i]+0.5*(Aold[i]+A[i])*step;
+					if(t*step==28.0){
+						V[i]=V[i]+0.5*(Aold[i]+A[i])*step+1.0;
+						DV=0.1;
+					}else{
+						V[i]=V[i]+0.5*(Aold[i]+A[i])*step;
+						}
 			}
 
 			if(t%50==0){ // 
@@ -76,7 +81,7 @@ int main(){
 				if(g!=0.0){
 					Mu=ChePotential(N, g, m, R, V,  D, Dx);
 				}
-				file1.open("evoenergyHON3h620g0.0R2.xxx",std::fstream::app);
+				file1.open("pruebaGebst1.1.xxx",std::fstream::app);
 				file1 << t*step  << "\t\t" << E   << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
 				file1.close();
 			}

@@ -4,6 +4,7 @@ using namespace std;
 //Contribución de la aceleración por el potencial cuántico, en un sistema descrito por las ecuaciones de Madelung obtenida mediante al método SPH, se recorre cada una de las partículas a la par de sus vecinas, dando un orden de operación N^2. Se requiere de las masas, la posición, el parámetro de suavizado, la densidad, la presión y el arreglo donde se guardan los valores de la aceleración, de cada una de las partículas.
 void AceQ(int N, double m[], double R[], double h[], double D[], double Dx[], double Dxx[], double Dxxx[], double Pxx[], double A[]){
   double Qeffi, Qeffj, Peffi, Peffj;
+/*
 //----------->007
 //for pressure tensor
 	for(int i=0; i<N; i++){
@@ -13,6 +14,7 @@ void AceQ(int N, double m[], double R[], double h[], double D[], double Dx[], do
 		}
 	}
 //----------->007
+*/
 /*
 for(int i=0; i<N; i++){
 		A[i]=0.0;
@@ -23,8 +25,8 @@ for(int i=0; i<N; i++){
 		}
 	}
 */
-/*
-//------------> Resultado 001
+
+//------------> Resultado 001, 008, 009
   for(int i=0; i<N; i++){
 	Peffi=0.0;
     Peffi=Pxx[i]/(D[i]*D[i]);
@@ -35,8 +37,8 @@ for(int i=0; i<N; i++){
       A[i]=A[i]-m[j]*(Peffi+Peffj)*dker(h[i], R[i], R[j]);
     }
   }
-//-------------> Resultado 001
-*/
+//-------------> Resultado 001, 008, 009
+
   /*
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -58,8 +60,9 @@ for(int i=0; i<N; i++){
 		  }
 	  }
 */
-/*
+
   //Second expresion for for quantum potential Q
+/*
   //----------------> 004, 005
   for(int i=0; i<N; i++){
 	  A[i]=0.0;
@@ -130,7 +133,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
   }
   //---------> Resultado 001,002
 */
-
+/*
 //------->007
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -140,7 +143,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
     }
   }
 //-------->007
-
+*/
 /*
 //-------> NO FUNCIONA
   for(int i=0; i<N; i++){
@@ -152,10 +155,10 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
     }
   }
 //-------->
-*/
-/*
 
-  //----------> Resultados 003,004
+*/
+
+  //----------> Resultados 003,004, 008, 009
   for(int i=0; i<N; i++){
     A[i]=0.0;
     for(int j=0; j<N; j++){
@@ -163,8 +166,8 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
         A[i]=A[i]-m[j]*(Veffj)*dker(h[i], R[i], R[j])/D[j];
     }
   }
-  //-----------> Resultados 003, 004
-*/
+  //-----------> Resultados 003, 004, 008, 009
+
 /*
 //------>006
   for(int i=0; i<N; i++){
@@ -224,7 +227,7 @@ void AceDamp(int N,double m[], double h[], double R[], double D[], double DV, do
     }
   }
   //----------------------> Resultados para 001, 002, 003, 004, 005
-   
+  
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 //Se utiliza en el caso de h adaptativa, necesita un término de corrección, similar a AceQ.

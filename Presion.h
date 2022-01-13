@@ -4,7 +4,8 @@ using namespace std;
 void Pressxx(int N, double m[], double h[], double R[], double D[], double Dx[], double Dxx[], double Dxxx[], double Pxx[]){
 
   double Q=0.0, P=0.0;
-/*	//paper's discretization of pressure tensor 
+	//paper's discretization of pressure tensor 
+	/*
   for(int i=0; i<N; ++i){
     Pxx[i]=0.0;
     for(int j=0; j<N; ++j){
@@ -13,13 +14,15 @@ void Pressxx(int N, double m[], double h[], double R[], double D[], double Dx[],
     }
   }
 // 
-*/ 
-//-------------->007
+*/
+
+//-------------->007, 008, 009
 for(int i=0;i<N; i++){
 	Pxx[i]=0.0;
 	Pxx[i]=0.25*(Dxx[i]-Dx[i]*Dx[i]/D[i]);
 	}
-//----------->007
+//----------->007, 008, 009
+
 ////////////////////////////Bohm Representation
 /*	//second discretization for quantum potential for Bohm representation 
 	for(int i=0; i<N; ++i){
@@ -36,6 +39,7 @@ for(int i=0; i<N; i++){
 	Pxx[i]=0.0;
  Pxx[i]=-(0.25/D[i])*(Dxx[i]-0.5*Dx[i]*Dx[i]/D[i]);
 }
+*/ 
 //------------->004, 005, 006
 //Verify pressure
 /*
