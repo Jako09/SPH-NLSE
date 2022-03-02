@@ -12,13 +12,14 @@ int main(){
 	if(Dim=="1Dimensional"){
 //		int N=300; // # of particles -----> for BEC and Harmonic Oscillator
 		int N;
+//			N=704;
 			N=pow(2,5)*20;	// # of particles   -----> for Harmonic Oscillator
-		int itmax=20000; // # of iterations of evolution Leap Froag
-	  double g = 0.0; // nonlinear parameter for NLSE ----> BEC
+		int itmax=10000; // # of iterations of evolution Leap Froag
+	  double g =-1.0; // nonlinear parameter for NLSE ----> BEC
 	  //Initial values
 	  double R[N], m[N], V[N], h[N], D[N], Dx[N], Dxx[N], Dxxx[N], Pxx[N], A[N], Aold[N], Ei[N]; // R -> position , m -> mass, V -> velocity, h -> smoothing length, D-> density, Dx-> derivative density, Dxx-> second derivative density, Pxx-> component xx of press tensor, A-> Total Acceleration. 
 	  //Different acelerations Aold --> old acceleration
-	  double Aq[N],Agp[N],Av[N],Ad[N], DV=8.0; // Aq -> acceleration due  for Quantum potential or quantum pressure , Agp-> aceleration due for Nonlinear or Gross-Pitaevskii , Av-> Acceleration due to potential, Ad-> damping aceleration.
+	  double Aq[N],Agp[N],Av[N],Ad[N], DV=4.0; // Aq -> acceleration due  for Quantum potential or quantum pressure , Agp-> aceleration due for Nonlinear or Gross-Pitaevskii , Av-> Acceleration due to potential, Ad-> damping aceleration.
 	  //for time integration leap frog
 	//	double step=0.1;
 	  double step=4.0e-3;
@@ -27,6 +28,8 @@ int main(){
 	  double Zh[N], Omega[N], dZh[N]; // Zh-> Zeta function for h, Omega-> h-grad, dZh-> derivative zeta function. 
 	  //for energy
 	  double E, Enl, EKin, EPot, EQn, Mu=0.0; // E----> energy average 
+	  //for error
+	  double error=0.0;
 	  SPH(N,g,R,m,h,V,D,Dx,Dxx, Dxxx, Pxx,Aq,Agp, Av,A, Zh, Omega); // SPH function generate N virtual partícles with the initial values of  g,R,m,h,V,D,Dx,Dxx,Pxx,A, Zh, Omega
 	  //In this case -h because we are goint to a back step.
 	  E=Qenergy(N, g, m, R, V, D, Dx, EKin, EPot, EQn, Enl); //Initial Energy
@@ -35,10 +38,10 @@ int main(){
 	  } 
 	//  Qenergyi(N, m, R, V, D, Dx, Ei);
 	//	data
-	  ofstream file("pruebaGbst1.1.xxx"); //open file to data
-		ofstream file1("pruebaeGbst1.1.xxx");
-		file << "\n\n\n"; //print in data file the initial values
-		file1 << 0 << "\t\t" << E << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
+	  ofstream file("Solitons2.xxx"); //open file to data
+		ofstream file1("eSolitons2.xxx");
+//		file << "\n\n\n"; //print in data file the initial values
+//		file1 << 0 << "\t\t" << E << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
 		  for(int i=0; i < N; i++){
 			file << R[i] <<  "\t\t"<< D[i] << "\t\t"<< Dx[i] <<  "\t\t"<< Dxx[i] << "\t\t"<< Dxxx[i] << "\t\t" << V[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << dZh[i] << "\t\t"<< Omega[i] <<  "\t\t"<< Ei[i] <<"\n";
 		  }
@@ -62,17 +65,73 @@ int main(){
 			AceV(N, m, h, R, D, Av); // the AceV function gives values to acceleration due for potential term
 			AceDamp(N,m, h, R, D,  DV, V, Ad); // The AceDamp function gives values to Acceleration due for damping 
 	//		Qenergyi(N, m, R, V, D, Dx, Ei);
+// this is for a HO evolution o soliton collition
+			///////////////////////////
+			/*
 			for(int i=0; i<N; i++){
 					A[i] = Aq[i]+Agp[i]+Av[i]+Ad[i];
-					if(t*step==28.0){
+					if(t*step==28.1){
 						V[i]=V[i]+0.5*(Aold[i]+A[i])*step+1.0;
 						DV=0.1;
 					}else{
 						V[i]=V[i]+0.5*(Aold[i]+A[i])*step;
 						}
 			}
-
-			if(t%50==0){ // 
+			*/
+			/*
+			////////////////////////////////This is for BEC
+			for(int i=0; i<N; i++){
+					A[i] = Aq[i]+Agp[i]+Av[i]+Ad[i];
+					V[i]=V[i]+0.5*(Aold[i]+A[i])*step;
+						
+			}
+			*/ 
+			////////////////////////////////
+			for(int i=0; i<N; i++){
+					A[i] = Aq[i]+Agp[i]+Av[i]+Ad[i];
+				if(R[i]<0.0){
+					if(t*step==10.0){
+						V[i]=V[i]+0.5*(Aold[i]+A[i])*step+1.0;
+						DV=0.1;
+					}else{
+						V[i]=V[i]+0.5*(Aold[i]+A[i])*step;
+						}
+				}
+				if(R[i]>0.0){
+					if(t*step==10.0){
+						V[i]=V[i]+0.5*(Aold[i]+A[i])*step-1.0;
+						DV=0.1;
+					}else{
+						V[i]=V[i]+0.5*(Aold[i]+A[i])*step;
+						}
+				}
+					
+			}
+		
+			 //////////////////////////////////
+/*			///////////////////////////////////////////////////////////////////
+			if(t*step==28.0){//this part correspond to the convergence of the method
+				for(int i=0; i < N; i++){
+					file << R[i] << "\t\t" << D[i] << "\t\t"<< Dx[i] << "\t\t"<< Dxx[i] << "\t\t"<< Dxxx[i] << "\t\t"  << V[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << dZh[i] << "\t\t"<< Omega[i] << "\t\t"<< Ei[i] <<'\n';
+				}
+				fstream file2;
+				file2.open("Error.xxx",std::fstream::app); 
+					if (!file2.is_open()) {
+						cout << "failed to open " << '\n';
+					} else {
+						double w=0.0,z=0.0;
+						for(int i=0; i<N; i++){
+								z=D[i]-DA(2, R[i]);
+								w+=z*z;
+							}	
+							error=sqrt(w);
+							file2 << N << "\t" << error << '\n';
+							file2.close();
+					}					
+			}
+*/			////////////////////////////////////////////////////////////////////
+/*				////////////////////////////// for dynamic to the coherent states
+			if(t*step==28.0 || t*step==28.2 || t*step==28.4 || t*step==28.6 || t*step==28.8){ // we use conditional only for the dynamics of HO , in other case we use t%50==0
 				file << "\n\n\n"; //print in data file the initial values
 				for(int i=0; i < N; i++){
 					file << R[i] << "\t\t" << D[i] << "\t\t"<< Dx[i] << "\t\t"<< Dxx[i] << "\t\t"<< Dxxx[i] << "\t\t"  << V[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << dZh[i] << "\t\t"<< Omega[i] << "\t\t"<< Ei[i] <<'\n';
@@ -81,7 +140,21 @@ int main(){
 				if(g!=0.0){
 					Mu=ChePotential(N, g, m, R, V,  D, Dx);
 				}
-				file1.open("pruebaGebst1.1.xxx",std::fstream::app);
+				file1.open("eDynamics01.xxx",std::fstream::app);
+				file1 << t*step  << "\t\t" << E   << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
+				file1.close();
+			}
+*/				/////////////////////////////////
+			if(t%50==0){
+				  file << "\n\n\n"; //print in data file the initial values
+				for(int i=0; i < N; i++){
+					file << R[i] << "\t\t" << D[i] << "\t\t"<< Dx[i] << "\t\t"<< Dxx[i] << "\t\t"<< Dxxx[i] << "\t\t"  << V[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << dZh[i] << "\t\t"<< Omega[i] << "\t\t"<< Ei[i] <<'\n';
+				}
+				E=Qenergy(N, g, m, R, V, D, Dx, EKin, EPot, EQn, Enl);
+				if(g!=0.0){
+					Mu=ChePotential(N, g, m, R, V,  D, Dx);
+				}
+				file1.open("eSolitons2.xxx",std::fstream::app);
 				file1 << t*step  << "\t\t" << E   << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
 				file1.close();
 			}

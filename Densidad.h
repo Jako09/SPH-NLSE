@@ -189,6 +189,10 @@ double DA(int Ptype, double Ri){
 		double rho0=PI/(4.0*r0*r0*r0);
 		z=rho0*sin(R)/R;
 	}
+	if(Ptype==6){
+//		z=(0.25)*(1.0/(cosh(Ri-5.0)*cosh(Ri-5.0)))+(0.25)*(1.0/(cosh(Ri+5.0)*cosh(Ri+5.0)));
+	z=(0.25)*(1.0/(cosh(Ri+5.0)*cosh(Ri+5.0)))+(0.25)*(1.0/(cosh(Ri-5.0)*cosh(Ri-5.0)));
+		}
 	return z;
 }
 

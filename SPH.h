@@ -6,14 +6,15 @@ using namespace std;
 void SPH(int N, double g, double R[], double m[], double h[], double V[], double D[], double Dx[], double Dxx[], double Dxxx[], double Pxx[], double Aq[], double Agp[], double Av[], double A[], double Zh[], double Omega[]){
   double Na, Nb, Vc;
   double xmin=-4.0, xmax=4.0;
-//  grid(2,N,m,R); //Distribución analitica mediante un Grid
+  grid(6,N,m,R); //Distribución analitica mediante un Grid
 //  UniformD(N,xmin,xmax,R,m); //Distribución Uniforme Aleatoria
-		Glasslike(N, xmin, xmax, R, m); //Distrobución equidistante
+//	Glasslike(N, xmin, xmax, R, m); //Distribución equidistante
 //  Suavizado(2,1, N, m, R, D, h, Zh, Omega);
   for(int i=0; i<N;++i){
 //	h[i]=1.0;
-	h[i]=500.0/(double)N; //for BEC h=400 for 005/////---> h=620/N for HO-007 and h=650/N for BEC-007//----->for 009 we use h=500/N for HO
-//	h[i]=620.0/640.0;
+//	h[i]=200.0/(double)N; only for initial data
+	h[i]=600/(double)N;			//for BEC h=400 for 005/////---> h=620/N for HO-007 and h=650/N for BEC-007//----->for 009 we use h=500/N, 490.0/N for HO	
+					//for initial data we use the standar examples 000 with h=200/N and the discretization
 //    h[i]=150.0/(double)N;
     V[i]=0.0;
   }

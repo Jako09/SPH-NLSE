@@ -32,8 +32,8 @@ int main(){
   //In this case -h because we are goint to a back step.
   step=4.0e-3;
   
-    ofstream file("SEpruebah350.xxx");
-  		ofstream file1("SEpruebaeh350.xxx");
+    ofstream file("BECg0.0.xxx");
+  		ofstream file1("BECg0.0.xxx");
     file << "\n\n\n";
       for(int i=0; i < N; ++i){
 	file << R[i] << "\t\t" << D[i] << "\t\t" << Dx[i] << "\t\t" << Dxx[i] << "\t\t" << V[i] << "\t\t"<< Aq[i]<< "\t\t" << Agp[i]<<  "\t\t" <<Av[i]<< "\t\t" << Ad[i]<<"\t\t" << A[i] << "\t\t" << Pxx[i] << "\t\t" << h[i] << "\t\t" << Zh[i] << "\t\t" << Omega[i] << "\n";
@@ -105,7 +105,7 @@ int main(){
 				if(g!=0.0){
 					Mu=ChePotential(N, g, m, Xc, Vc,  D, Dx);
 				}
-		file1.open("SEpruebaeh350.xxx",std::fstream::app);
+		file1.open("BECg0.0.xxx",std::fstream::app);
 		file1 << j*step  << "\t\t" << E   << "\t\t" << Enl <<"\t\t" << EKin <<"\t\t" << EPot <<"\t\t" << EQn <<"\t\t" << Mu << '\n';
 		file1.close();
 	}

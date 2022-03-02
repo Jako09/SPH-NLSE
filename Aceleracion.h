@@ -157,7 +157,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
 //-------->
 
 */
-
+/*
   //----------> Resultados 003,004, 008, 009
   for(int i=0; i<N; i++){
     A[i]=0.0;
@@ -167,7 +167,7 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
     }
   }
   //-----------> Resultados 003, 004, 008, 009
-
+*/
 /*
 //------>006
   for(int i=0; i<N; i++){
