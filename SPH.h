@@ -3,29 +3,41 @@
 using namespace std;
 
 
-void SPH(int N, double g, double R[], double m[], double h[], double V[], double D[], double Dx[], double Dxx[], double Dxxx[], double Pxx[], double Aq[], double Agp[], double Av[], double A[], double Zh[], double Omega[]){
-  double Na, Nb, Vc;
-  double xmin=-4.0, xmax=4.0;
-  grid(6,N,m,R); //Distribución analitica mediante un Grid
-//  UniformD(N,xmin,xmax,R,m); //Distribución Uniforme Aleatoria
-//	Glasslike(N, xmin, xmax, R, m); //Distribución equidistante
-//  Suavizado(2,1, N, m, R, D, h, Zh, Omega);
-  for(int i=0; i<N;++i){
-//	h[i]=1.0;
-//	h[i]=200.0/(double)N; only for initial data
-	h[i]=600/(double)N;			//for BEC h=400 for 005/////---> h=620/N for HO-007 and h=650/N for BEC-007//----->for 009 we use h=500/N, 490.0/N for HO	
-					//for initial data we use the standar examples 000 with h=200/N and the discretization
-//    h[i]=150.0/(double)N;
-    V[i]=0.0;
-  }
-  Densidad0(N, m, R, h, D);
-  Densidad1( N, m, R, h, D, Dx);
-  Densidad2( N, m, R, h, D, Dx, Dxx);
-  Densidad3(N , m, R, h,  D, Dx,Dxx,Dxxx);
-  Pressxx( N, m, R, h, D, Dx, Dxx,Dxxx, Pxx);
-  AceQ(N, m, R, h, D, Dx, Dxx, Dxxx, Pxx, Aq);
-  AceGP(N,g, m, R, h, D,Dx, Agp);
-  AceV(N,m,h, R, D,Av);
+void SPH(int Ptype, int Dtype, int N, int hf, double g, double R[], double m[], double h[], double V[], double D[], double Dx[], double Dxx[], double Dxxx[], double Pxx[], double Aq[], double Agp[], double Av[], double A[], double Zh[], double Omega[]){
+	double Na, Nb, Vc;
+	double xmin=-4.0, xmax=4.0;
+	if(Dtype==1){
+		if(Ptype==1||Ptype==2||Ptype==3){
+			grid(2,N,m,R); //Distribución analitica mediante un Grid
+			}
+		if(Ptype==4){
+			grid(6,N,m,R);
+			}
+		}
+	if(Dtype==2){
+			Glasslike(N, xmin, xmax, R, m); //Distribución equidistante
+		}
+	if(Dtype==3){
+			UniformD(N,xmin,xmax,R,m); //Distribución Uniforme Aleatoria
+		}
+	
+	//Suavizado(2,1, N, m, R, D, h, Zh, Omega);
+	for(int i=0; i<N;++i){
+		//h[i]=1.0;
+		//h[i]=200.0/(double)N; only for initial data
+		h[i]=(double)hf/(double)N;	//for BEC h=400 for 005/////---> h=620/N for HO-007 and h=650/N for BEC-007//----->for 009 we use h=500/N, 490.0/N for HO	
+		//for initial data we use the standar examples 000 with h=200/N and the discretization
+		//h[i]=150.0/(double)N;
+		V[i]=0.0;
+		}
+	Densidad0(N, m, R, h, D);
+	Densidad1( N, m, R, h, D, Dx);
+	Densidad2( N, m, R, h, D, Dx, Dxx);
+	Densidad3(N , m, R, h,  D, Dx,Dxx,Dxxx);
+	Pressxx( N, m, R, h, D, Dx, Dxx,Dxxx, Pxx);
+	AceQ(N, m, R, h, D, Dx, Dxx, Dxxx, Pxx, Aq);
+	AceGP(N,g, m, R, h, D,Dx, Agp);
+	AceV(N,m,h, R, D,Av);
   
   for(int i=0;i<N;++i){
     A[i] = Aq[i] + Agp[i] + Av[i];

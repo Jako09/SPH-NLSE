@@ -8,35 +8,35 @@ using namespace std;
 //Obtención de las densidades de cada una de las partículas en el método SPH, donde será necesario la posción para evaluar el kernel, el parámetro de suavizado para definir el kernel y un arreglo donde se guardaran los valores de la densidad, el número de iperaciones es de orden N^2.
 void Densidad0(int N, double m[], double R[], double h[], double D[]){
   
-  for(int i=0; i<N; i++){
-    D[i]=0.0;
-    for(int j=0; j<N; j++){
-      D[i]+=m[j]*ker(h[i], R[i], R[j]);
-    } 
-  }
+	for(int i=0; i<N; i++){
+		D[i]=0.0;
+		for(int j=0; j<N; j++){
+			D[i]+=m[j]*ker(h[i], R[i], R[j]);
+			} 
+		}
   
 /*
   //// for desplacement
-  for(int i=0; i<N; i++){
-    D[i]=0.0;
+for(int i=0; i<N; i++){
+	D[i]=0.0;
     for(int j=0; j<N; j++){
       D[i]+=m[j]*ker(h[i], R[i], R[j]);
     } 
   }
  */
-}
+	}
 //La derivada de la densidad se obtiene a través de la masa de cada una de las partículas como factor que multiplica la derivada del kernel y una constante q, aunque se puede omitir el factor q, como segunda discretización.
 void Densidad1(int N, double m[], double R[], double h[], double D[], double Dx[]){
 	double q=0.0;	
 	//first discretization -----> Reproduce las derivadas del pefil analitico
 	//--------->001, 002, 003, 006, 008, 009
 
-  for(int i=0; i<N; i++){
-    Dx[i]=0.0;
-    for(int j=0; j<N; j++){
-		Dx[i]+=m[j]*dker(h[i], R[i], R[j]);
-    }
-  }
+	for(int i=0; i<N; i++){
+		Dx[i]=0.0;
+		for(int j=0; j<N; j++){
+			Dx[i]+=m[j]*dker(h[i], R[i], R[j]);
+			}
+		}
 
 	//--------->001, 002, 003, 006, 008, 009
    //second discretization
@@ -151,8 +151,8 @@ void Densidad3(int N , double m[], double R[], double h[], double D[], double Dx
 		Dxxx[i]=0.0;
 		for(int j=0; j<N; j++){
 			Dxxx[i]+=m[j]*dddker(h[i], R[i], R[j]);
+			}
 		}
-	}
 	 
 /*
 			////////for desplacement

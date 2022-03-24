@@ -53,6 +53,10 @@ void grid(int Ptype, int N, double m[], double R[]){
 		min=-15.0;
 		max=15.0;
 		}
+	if(Ptype==7){
+		min=-15.0;
+		max=15.0;
+		}
 //Se define la separación entre los puntos que definen el grid
 	z=(max-min)/((double)dots);
 //Se suma el área de cada uno de los paralelogramos dando como resultado el área total aproximada, debajo de la curva y entre el eje coordenado, entre los limites xmax y xmin.	

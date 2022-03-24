@@ -17,7 +17,8 @@ set xrange[-4:4]
 #set logscale y
 do for [it=0:n]{ 
 ####   for Animation n=iterations and pause 0
-	p   "BECg12.5484.xxx" i it u ($1):(sqrt($2)), "BEC007g12.5484.xxx" i it u ($1):(sqrt($2)),f(x)
+	p "BECgroundstate200.000000.xxx" i it u ($1):($2), "BECgroundstate100.000000.xxx" i it u ($1):($2), f(x)
+	#p   "BECg12.5484.xxx" i it u ($1):(sqrt($2)), "BEC007g12.5484.xxx" i it u ($1):(sqrt($2)),f(x)
 #	"pruebaeh5001bst5.xxx" i it u 1:2,"pruebah4702.xxx" i it u 1:2,"pruebah4902.xxx" i it u 1:2,
 	#"pruebah480.xxx" i it u 1:2,"pruebah520.xxx" i it u 1:2, f(x)
 ####   for energy is neccesary n=0 and pause -1, , 																																							

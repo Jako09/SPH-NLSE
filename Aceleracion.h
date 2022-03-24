@@ -3,7 +3,7 @@
 using namespace std;
 //Contribución de la aceleración por el potencial cuántico, en un sistema descrito por las ecuaciones de Madelung obtenida mediante al método SPH, se recorre cada una de las partículas a la par de sus vecinas, dando un orden de operación N^2. Se requiere de las masas, la posición, el parámetro de suavizado, la densidad, la presión y el arreglo donde se guardan los valores de la aceleración, de cada una de las partículas.
 void AceQ(int N, double m[], double R[], double h[], double D[], double Dx[], double Dxx[], double Dxxx[], double Pxx[], double A[]){
-  double Qeffi, Qeffj, Peffi, Peffj;
+	double Qeffi, Qeffj, Peffi, Peffj;
 /*
 //----------->007
 //for pressure tensor
@@ -27,16 +27,16 @@ for(int i=0; i<N; i++){
 */
 
 //------------> Resultado 001, 008, 009
-  for(int i=0; i<N; i++){
-	Peffi=0.0;
-    Peffi=Pxx[i]/(D[i]*D[i]);
-    A[i]=0.0;
-    for(int j=0; j<N; j++){
-      Peffj=0.0;
-      Peffj=Pxx[j]/(D[j]*D[j]);
-      A[i]=A[i]-m[j]*(Peffi+Peffj)*dker(h[i], R[i], R[j]);
-    }
-  }
+	for(int i=0; i<N; i++){
+		Peffi=0.0;
+		Peffi=Pxx[i]/(D[i]*D[i]);
+		A[i]=0.0;
+		for(int j=0; j<N; j++){
+			Peffj=0.0;
+			Peffj=Pxx[j]/(D[j]*D[j]);
+			A[i]=A[i]-m[j]*(Peffi+Peffj)*dker(h[i], R[i], R[j]);
+			}
+		}
 //-------------> Resultado 001, 008, 009
 
   /*
@@ -108,10 +108,10 @@ for(int i=0; i<N; i++){
 //Contribución de la aceleración por el parámetro no lineal g, debido a la ecuación Gross Pitaevskii en su transformación de Madelung, mediante el método SPH, donde es necesario, el valor de g, la masa, la posición, el suavizado, la densidad y el arreglo para la aceleración, para cada partícula.También es de orden operación N^2.
 void AceGP(int N, double g, double m[], double R[], double h[], double D[], double Dx[], double A[]){
   
-  for(int i=0; i<N; i++){
-    A[i]=0.0;
-    A[i]=-g*Dx[i];
-  }
+	for(int i=0; i<N; i++){
+		A[i]=0.0;
+		A[i]=-g*Dx[i];
+		}
   
   /*
   for(int i=0; i<N; i++){
@@ -121,7 +121,7 @@ void AceGP(int N, double g, double m[], double R[], double h[], double D[], doub
 	}
   }
    */
-}
+	}
 //Contribución debido al potencial al cual se encuentra sometido el sistema, en nuestro caso, el potencial se refiere a un osciladro armónico, donde se requiere del valor de la posición de la partícula para obtener su correspondiente aceleración.
 void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
   double Veffj, Veffi, VQ;
@@ -157,17 +157,17 @@ void AceV(int N, double m[], double h[], double R[], double D[], double A[]){
 //-------->
 
 */
-/*
+
   //----------> Resultados 003,004, 008, 009
-  for(int i=0; i<N; i++){
-    A[i]=0.0;
-    for(int j=0; j<N; j++){
-		Veffj=0.5*R[j]*R[j];
-        A[i]=A[i]-m[j]*(Veffj)*dker(h[i], R[i], R[j])/D[j];
-    }
-  }
+	for(int i=0; i<N; i++){
+		A[i]=0.0;
+		for(int j=0; j<N; j++){
+			Veffj=0.5*R[j]*R[j];
+			A[i]=A[i]-m[j]*(Veffj)*dker(h[i], R[i], R[j])/D[j];
+			}
+		}
   //-----------> Resultados 003, 004, 008, 009
-*/
+
 /*
 //------>006
   for(int i=0; i<N; i++){

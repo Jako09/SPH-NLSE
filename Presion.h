@@ -3,7 +3,7 @@ using namespace std;
 
 void Pressxx(int N, double m[], double h[], double R[], double D[], double Dx[], double Dxx[], double Dxxx[], double Pxx[]){
 
-  double Q=0.0, P=0.0;
+	double Q=0.0, P=0.0;
 	//paper's discretization of pressure tensor 
 	/*
   for(int i=0; i<N; ++i){
@@ -17,10 +17,10 @@ void Pressxx(int N, double m[], double h[], double R[], double D[], double Dx[],
 */
 
 //-------------->007, 008, 009
-for(int i=0;i<N; i++){
-	Pxx[i]=0.0;
-	Pxx[i]=0.25*(Dxx[i]-Dx[i]*Dx[i]/D[i]);
-	}
+	for(int i=0;i<N; i++){
+		Pxx[i]=0.0;
+		Pxx[i]=0.25*(Dxx[i]-Dx[i]*Dx[i]/D[i]);
+		}
 //----------->007, 008, 009
 
 ////////////////////////////Bohm Representation
